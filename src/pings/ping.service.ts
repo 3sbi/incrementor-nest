@@ -14,8 +14,6 @@ export class PingService {
   async addPing(body: CreatePingDto): Promise<{ bodyNumber: number }> {
     const ping = await this.pingRepository.create(body);
     await this.pingRepository.insert(ping);
-    console.log(ping);
-    console.log('count:', await this.pingRepository.count());
     return { bodyNumber: body.bodyNumber + 1 };
   }
 

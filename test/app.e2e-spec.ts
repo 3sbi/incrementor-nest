@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 
-describe('AppController (e2e)', () => {
+describe('PingController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,10 +15,25 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/v1/pings (POST)', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/v1/pings')
+      .send({ bodyNumber: 11 })
+      .expect(201)
+      .expect({ bodyNumber: 12 });
+  });
+
+  it('check if already exists', () => {
+    return request(app.getHttpServer())
+      .post('/v1/pings')
+      .send({ bodyNumber: 11 })
+      .expect(400);
+  });
+
+  it('check if bodyNumber is less by one than existing number', () => {
+    return request(app.getHttpServer())
+      .post('/v1/pings')
+      .send({ bodyNumber: 10 })
+      .expect(400);
   });
 });

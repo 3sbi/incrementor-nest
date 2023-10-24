@@ -4,17 +4,21 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PingService } from './ping.service';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsPingNumberLessByOne implements ValidatorConstraintInterface {
-  constructor(protected readonly pingService: PingService) {}
+  constructor(
+    protected readonly pingService: PingService,
+    protected readonly logger: Logger,
+  ) {}
 
   async validate(bodyNumber: number) {
     const ping = await this.pingService.findOneByBodyNumber(bodyNumber + 1);
     if (ping) {
+      this.logger.error('bodyNumber one less than the existing number');
       throw new BadRequestException(
         'bodyNumber one less than the existing number',
       );
