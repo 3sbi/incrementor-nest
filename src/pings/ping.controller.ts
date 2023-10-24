@@ -11,7 +11,7 @@ export class PingController {
   constructor(private readonly pingService: PingService) {}
 
   @Post()
-  createUser(@Body() body: CreatePingDto) {
+  createPing(@Body() body: CreatePingDto) {
     return this.pingService.addPing(body);
   }
 }
