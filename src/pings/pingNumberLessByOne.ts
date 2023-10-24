@@ -15,7 +15,10 @@ export class IsPingNumberLessByOne implements ValidatorConstraintInterface {
     protected readonly logger: Logger,
   ) {}
 
-  async validate(bodyNumber: number) {
+  async validate(bodyNumber: any) {
+    if (typeof bodyNumber !== 'number') {
+      throw new BadRequestException('param bodyNumber is not number');
+    }
     const ping = await this.pingService.findOneByBodyNumber(bodyNumber + 1);
     if (ping) {
       this.logger.error('bodyNumber one less than the existing number');
