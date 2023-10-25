@@ -1,7 +1,14 @@
 ## Description
 
-framework TypeScript starter repository.
+Docker container exposes web app on port 3000.
+To test out handler you should send POST request to `/v1/pings` with body { bodyNumber: `number` }.
+Other handlers are not implemented.
 
+
+## components UML diagram
+![components](./components_uml.png)
+## sequence UML diagram
+![sequence](./sequence_uml.png)
 ## Installation
 
 ```bash
