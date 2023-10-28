@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PingsModule } from './pings/pings.module';
 import { RequestLoggerMiddleware } from './middleware/request-logger.middleware';
+import { Ping } from './ping.entity';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { RequestLoggerMiddleware } from './middleware/request-logger.middleware'
       }),
       inject: [ConfigService],
     }),
-    PingsModule,
+    TypeOrmModule.forFeature([Ping]),
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
